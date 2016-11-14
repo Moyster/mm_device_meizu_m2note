@@ -42,7 +42,7 @@
     <!-- haptic feedback  -->
     <string name="touchscreen_extras">Дополнительные настройки</string>
     <string name="haptic_feedback">Вибрация</string>
-    <string name="haptic_feedback_summary">Использовать вбирацию при обработке жеста</string>
+    <string name="haptic_feedback_summary">Использовать вибрацию при обработке жеста</string>
 
     <!-- gesture actions  -->
     <string name="disabled">Выключено</string>

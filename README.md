@@ -1,8 +1,8 @@
-# Meizu M2 Note - Unofficial CyanogenMod 13.0
+# Meizu M2 Note - Unofficial LineageOS 13.0
 
 ---
 
-This device tree is made for building CyanogenMod 13.0.
+This device tree is made for building LineageOS 13.0.
 
 ---
 

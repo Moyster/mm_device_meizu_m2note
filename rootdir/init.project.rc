@@ -1,0 +1,239 @@
+# MTK project .rc configure
+
+import init.mt6735.usb.rc
+
+on init
+    mkdir /mnt/media_rw/usbotg 0700 media_rw media_rw
+    mkdir /storage/usbotg 0700 root root
+
+on post-fs-data
+
+#
+# Connectivity related device nodes & configuration (begin)
+#
+
+#/dev/ttyMT2 for Connectivity BT/FM/GPS usage
+    chmod 0660 /dev/ttyMT2
+    chown system system /dev/ttyMT2
+
+    exec /system/xbin/mknod /dev/wmtWifi c 153 0
+    chmod 0660 /dev/wmtWifi
+    chown system system /dev/wmtWifi
+
+#Camera
+    chmod 0660 /dev/GAF001AF
+    chown system camera /dev/GAF001AF
+
+    chmod 0660 /dev/DW9714AF
+    chown system camera /dev/DW9714AF
+
+    chmod 0660 /dev/AD5820AF
+    chown system camera /dev/AD5820AF
+
+    chmod 0660 /dev/BU64745GWZAF
+    chown system camera /dev/BU64745GWZAF
+    
+    chmod 0660 /dev/BU64245
+    chown system camera /dev/BU64245
+
+	chmod 0660 /dev/LC898122AF 
+    chown system camera /dev/LC898122AF 
+
+	chmod 0660 /dev/AK7345AF 
+    chown system camera /dev/AK7345AF 
+
+#SMB
+    chown system system /proc/smb/ScreenComm
+    chmod 0660 /proc/smb/ScreenComm
+
+# GPS
+    chown gps gps /sys/class/gpsdrv/gps/pwrctl
+    chown gps gps /sys/class/gpsdrv/gps/suspend
+    chown gps gps /sys/class/gpsdrv/gps/state
+    chown gps gps /sys/class/gpsdrv/gps/pwrsave
+    chown gps gps /sys/class/gpsdrv/gps/status
+
+# WiFi
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wpa_supplicant 0770 wifi wifi
+    chown wifi wifi /data/misc/wifi
+
+#Define device for ATCID
+    chmod 660 /dev/ttyGS0
+    chown system /dev/ttyGS0
+    chmod 660 /dev/ttyGS1
+    chown system /dev/ttyGS1
+
+## Sensors
+# ltr559
+    chmod 0660 /sys/bus/i2c/devices/2-0023/als_data
+    chown system system /sys/bus/i2c/devices/2-0023/als_data
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/als_enable
+    chown system system /sys/bus/i2c/devices/2-0023/als_enable
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/ps_data
+    chown system system /sys/bus/i2c/devices/2-0023/ps_data
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/ps_enable
+    chown system system /sys/bus/i2c/devices/2-0023/ps_enable
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/ps_interrupt
+    chown system system /sys/bus/i2c/devices/2-0023/ps_interrupt
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/ps_offset
+    chown system system /sys/bus/i2c/devices/2-0023/ps_offset
+
+    chmod 0660 /sys/bus/i2c/devices/2-0023/reg
+    chown system system /sys/bus/i2c/devices/2-0023/reg
+
+    chmod 660            /sys/bus/i2c/devices/2-0023/self_test
+    chown system system  /sys/bus/i2c/devices/2-0023/self_test
+
+# sensor st480 and ak09911
+    chmod 660            /sys/bus/i2c/devices/2-000c/self_test
+    chown system system  /sys/bus/i2c/devices/2-000c/self_test
+
+# lsm6ds3
+    chown system system /dev/iio\:device0
+    chmod 0666 /dev/iio\:device0
+    chown system system /dev/iio\:device1
+    chmod 0666 /dev/iio\:device1
+    chown system system /dev/iio\:device2
+    chmod 0666 /dev/iio\:device2
+    chown system system /dev/iio\:device3
+    chmod 0666 /dev/iio\:device3
+    chown system system /dev/iio\:device4
+    chmod 0666 /dev/iio\:device4
+    chown system system /dev/iio\:device5
+    chmod 0666 /dev/iio\:device5
+    chown system system /dev/iio\:device6
+    chmod 0666 /dev/iio\:device6
+    chown system system /dev/iio\:device7
+    chmod 0666 /dev/iio\:device7
+    chown system system /dev/iio\:device8
+    chmod 0666 /dev/iio\:device8
+    chown system system /dev/iio\:device9
+    chmod 0666 /dev/iio\:device9
+
+
+# meizu sensor interfaces
+    chown system system /sys/class/meizu/acc/acc_calibration
+    chown system system /sys/class/meizu/acc/acc_enable
+    chown system system /sys/class/meizu/acc/acc_self_test
+    chown system system /sys/class/meizu/acc/acc_x_calibbias
+    chown system system /sys/class/meizu/acc/acc_y_calibbias
+    chown system system /sys/class/meizu/acc/acc_z_calibbias
+    chown system system /sys/class/meizu/acc/acc_x_offset
+    chown system system /sys/class/meizu/acc/acc_y_offset
+    chown system system /sys/class/meizu/acc/acc_z_offset
+    chown system system /sys/class/meizu/acc/acc_id
+    chown system system /sys/class/meizu/acc/acc_name
+
+    chown system system /sys/class/meizu/gyr/gyr_enable
+    chown system system /sys/class/meizu/gyr/gyr_self_test
+    chown system system /sys/class/meizu/gyr/gyr_id
+    chown system system /sys/class/meizu/gyr/gyr_name
+
+    chown system system /sys/class/meizu/ps/ps_enable
+    chown system system /sys/class/meizu/ps/ps_data
+    chown system system /sys/class/meizu/ps/ps_calibration
+    chown system system /sys/class/meizu/ps/ps_calibbias
+    chown system system /sys/class/meizu/ps/ps_offset
+    chown system system /sys/class/meizu/ps/ps_id
+    chown system system /sys/class/meizu/ps/ps_name
+    chown system system /sys/class/meizu/ps/ps_irq_gpio
+
+    chown system system /sys/class/meizu/als/als_enable
+    chown system system /sys/class/meizu/als/als_data
+    chown system system /sys/class/meizu/als/als_id
+    chown system system /sys/class/meizu/als/als_name
+
+    chown system system /sys/class/meizu/compass/compass_enable
+    chown system system /sys/class/meizu/compass/compass_self_test
+    chown system system /sys/class/meizu/compass/compass_id
+    chown system system /sys/class/meizu/compass/compass_name
+
+# Char device for BT 3.0 HS
+    mknod /dev/ampc0 c 151 0
+    chown bluetooth bluetooth /dev/ampc0
+    chmod 0660 /dev/ampc0
+
+# Add by Meizu BSP@YinShunQing for HALL
+    chown system system /sys/devices/platform/gpio-keys.0/key_hall_state
+    chmod 0440 /sys/devices/platform/gpio-keys.0/key_hall_state
+
+# Add by WuWeilin@BSP for power mode permission 
+    chown system system /sys/power/power_mode
+# for Holster
+    chown system system /sys/devices/mx_tsp/hall_mode
+    chmod 0660 /sys/devices/mx_tsp/hall_mode
+
+# for Gesture
+    chown system system /sys/devices/platform/mx-gs/gesture_control
+    chmod 0660 /sys/devices/platform/mx-gs/gesture_control
+    chown system system /sys/devices/platform/mx-gs/gesture_data
+    chmod 0660 /sys/devices/platform/mx-gs/gesture_data
+
+# for notification leds
+    chmod 0660 /sys/class/leds/button-backlight/trigger
+    chmod 0660 /sys/class/leds/button-backlight/oneshot_blink
+    chmod 0660 /sys/class/leds/button-backlight/brightness
+
+#
+# Connectivity related device nodes & configuration (end)
+#
+
+# Encrypt phone function
+    setprop vold.post_fs_data_done 1
+
+#
+# Connectivity related services (Begin)
+#
+
+service atci_service /system/bin/atci_service
+	socket atci-service stream 660 radio system
+	socket atci-serv-fw stream 660 radio system
+	user root
+        disabled
+	group radio system
+service atcid-daemon-u /system/bin/atcid
+	user system
+	group radio system media
+	disabled
+	oneshot
+
+service atcid-daemon-e /system/bin/atcid
+	user root
+	group radio system
+	disabled
+	oneshot
+
+on early_property:ro.build.type=eng
+start atci_service
+start atcid-daemon-e
+service audio-daemon /system/bin/audiocmdservice_atci
+    class main
+    socket atci-audio stream 660 media system
+    user media
+    group nvram media system sdcard_rw
+    disabled
+    oneshot
+
+service wmtLoader /system/bin/wmt_loader
+    user root
+    group root
+   class core
+    oneshot
+
+
+service conn_launcher /system/bin/6620_launcher -p /system/etc/firmware/
+    user system
+    group system
+    class core
+
+#
+# Connectivity related services (End)
+#
+

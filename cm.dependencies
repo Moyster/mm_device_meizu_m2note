@@ -1,0 +1,14 @@
+[
+  {
+    "remote": "github",
+    "repository": "Moyster/android_vendor_meizu_m2note",
+    "target_path": "vendor/meizu/m2note",
+    "branch": "cm-13.0"
+  },
+  {
+    "remote": "github",
+    "repository": "Moyster/android_kernel_m2note",
+    "target_path": "kernel/meizu/m2note",
+    "branch": "mm-6.0"
+  }
+] 

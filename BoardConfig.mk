@@ -21,9 +21,6 @@ LOCAL_PATH := device/meizu/m2note
 include $(LOCAL_PATH)/PlatformConfig.mk
 include $(LOCAL_PATH)/board/*.mk
 
-# Headers include
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-
 TARGET_BOOTLOADER_BOARD_NAME := mt6753
 TARGET_NO_BOOTLOADER := true
 

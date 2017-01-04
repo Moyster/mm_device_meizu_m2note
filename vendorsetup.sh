@@ -21,5 +21,5 @@
 # function: add_lunch_combo generic-eng
 
 for var in eng user userdebug; do
-  add_lunch_combo cm_m2note-$var
+  add_lunch_combo lineage_m2note-$var
 done

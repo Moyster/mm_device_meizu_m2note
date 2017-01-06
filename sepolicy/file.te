@@ -144,3 +144,6 @@ type iso9660, fs_type;
 
 # data_tmpfs_log
 type data_tmpfs_log_file, file_type, data_file_type;
+
+# Gestures
+type gesture_sysfs, sysfs_type, file_type;

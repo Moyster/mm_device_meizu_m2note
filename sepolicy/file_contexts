@@ -296,6 +296,7 @@
 /sys/devices/platform/msensor/driver(/.*)?	u:object_r:sysfs_msensor_file:s0
 /sys/bus/platform/drivers/mtk-kpd(/.*)?	u:object_r:sysfs_keypad_file:s0
 /sys/power/vcorefs/pwr_ctrl -- u:object_r:sysfs_vcorefs_pwrctrl:s0
+/sys/devices/platform/mx-gs/gesture_control u:object_r:gesture_sysfs:s0
 
 
 #############################

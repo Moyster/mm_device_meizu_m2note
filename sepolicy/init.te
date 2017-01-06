@@ -13,3 +13,6 @@ allow init nvdata_file:dir { write search setattr read create open add_name };
 # Operation : Migration
 # Purpose : for L : add for partition
 allow init platformblk_device:blk_file setattr;
+
+# Gestures
+allow init gesture_sysfs:file setattr;

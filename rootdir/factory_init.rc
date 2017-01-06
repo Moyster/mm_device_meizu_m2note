@@ -303,16 +303,9 @@ on post-fs-data
     mkdir /data/nvram/md  0770 root system
     mkdir /data/nvram/md2 0770 root system
 
-#  Build-in Modified - S
-#    insmod /system/lib/modules/ccci_plat.ko
-#    insmod /system/lib/modules/ccci.ko
-#  Build-in Modified - E
-#   chown ccci ccci /sys/class/BOOT/BOOT/boot/md
     chown radio radio /sys/kernel/ccci/boot
 
     # M4U
-    #insmod /system/lib/modules/m4u.ko
-    #mknod /dev/M4U_device c 188 0
     chmod 0444 /dev/M4U_device
     
     #set mlock limit to infinate (for m4u operation)
@@ -422,10 +415,6 @@ on property:vold.decrypt=trigger_shutdown_framework
 
 ## Daemon processes to be run by init.
 ##
-
-# Update the second boot logo
-# service bootlogoupdater /system/bin/boot_logo_updater
-#    oneshot
 
 service ueventd /sbin/ueventd
     class core

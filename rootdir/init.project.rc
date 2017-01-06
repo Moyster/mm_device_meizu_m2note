@@ -36,10 +36,10 @@ on post-fs-data
     chmod 0660 /dev/BU64245
     chown system camera /dev/BU64245
 
-	chmod 0660 /dev/LC898122AF 
+    chmod 0660 /dev/LC898122AF 
     chown system camera /dev/LC898122AF 
 
-	chmod 0660 /dev/AK7345AF 
+    chmod 0660 /dev/AK7345AF 
     chown system camera /dev/AK7345AF 
 
 #SMB

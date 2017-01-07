@@ -28,9 +28,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-//import android.hardware.camera2.CameraManager;
-//import android.hardware.camera2.CameraCharacteristics;
-//import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraAccessException;
 import android.media.session.MediaSessionLegacyHelper;
 import android.net.Uri;
 import android.os.Handler;
@@ -111,8 +111,8 @@ public class KeyHandler implements DeviceKeyHandler {
     private PackageManager mPackageManager;
     private Sensor mProximitySensor;
     private Vibrator mVibrator;
-    //private CameraManager mCameraManager;
-    //private String mRearCameraId;
+    private CameraManager mCameraManager;
+    private String mRearCameraId;
     private WakeLock mProximityWakeLock;
     private WakeLock mGestureWakeLock;
     private int mProximityTimeOut;
@@ -121,8 +121,8 @@ public class KeyHandler implements DeviceKeyHandler {
     private Context cmaContext = null;
 
     private boolean isLastPressHomeButton = false;
-    //private boolean mTorchEnabled;
-    //private boolean mNotificationSliderVibrate;
+    private boolean mTorchEnabled;
+    private boolean mNotificationSliderVibrate;
 
     public KeyHandler(Context context) {
         mContext = context;
@@ -157,43 +157,43 @@ public class KeyHandler implements DeviceKeyHandler {
             mVibrator = null;
         }
 
-//        mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
-//        mCameraManager.registerTorchCallback(new MyTorchCallback(), mEventHandler);
-//    }
-//
-//    private class MyTorchCallback extends CameraManager.TorchCallback {
-//        @Override
-//        public void onTorchModeChanged(String cameraId, boolean enabled) {
-//            if (!cameraId.equals(mRearCameraId))
-//                return;
-//            mTorchEnabled = enabled;
-//        }
-//
-//        @Override
-//        public void onTorchModeUnavailable(String cameraId) {
-//            if (!cameraId.equals(mRearCameraId))
-//                return;
-//            mTorchEnabled = false;
-//        }
-//    }
-//
-//    private String getRearCameraId() {
-//        if (mRearCameraId == null) {
-//            try {
-//                for (final String cameraId : mCameraManager.getCameraIdList()) {
-//                    CameraCharacteristics characteristics =
-//                            mCameraManager.getCameraCharacteristics(cameraId);
-//                    int cOrientation = characteristics.get(CameraCharacteristics.LENS_FACING);
-//                    if (cOrientation == CameraCharacteristics.LENS_FACING_BACK) {
-//                        mRearCameraId = cameraId;
-//                        break;
-//                    }
-//                }
-//            } catch (CameraAccessException e) {
-//                // Ignore
-//            }
-//        }
-//        return mRearCameraId;
+        mCameraManager = (CameraManager) mContext.getSystemService(Context.CAMERA_SERVICE);
+        mCameraManager.registerTorchCallback(new MyTorchCallback(), mEventHandler);
+    }
+
+    private class MyTorchCallback extends CameraManager.TorchCallback {
+        @Override
+        public void onTorchModeChanged(String cameraId, boolean enabled) {
+            if (!cameraId.equals(mRearCameraId))
+                return;
+            mTorchEnabled = enabled;
+        }
+
+        @Override
+        public void onTorchModeUnavailable(String cameraId) {
+            if (!cameraId.equals(mRearCameraId))
+                return;
+            mTorchEnabled = false;
+        }
+    }
+
+    private String getRearCameraId() {
+        if (mRearCameraId == null) {
+            try {
+                for (final String cameraId : mCameraManager.getCameraIdList()) {
+                    CameraCharacteristics characteristics =
+                            mCameraManager.getCameraCharacteristics(cameraId);
+                    int cOrientation = characteristics.get(CameraCharacteristics.LENS_FACING);
+                    if (cOrientation == CameraCharacteristics.LENS_FACING_BACK) {
+                        mRearCameraId = cameraId;
+                        break;
+                    }
+                }
+            } catch (CameraAccessException e) {
+                // Ignore
+            }
+        }
+        return mRearCameraId;
     }
 
     private void ensureKeyguardManager() {
@@ -241,17 +241,17 @@ public class KeyHandler implements DeviceKeyHandler {
                         dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
                         break;
                     case "flashlight":
-                        //String rearCameraId = getRearCameraId();
-                        //if (rearCameraId != null) {
-                        //    mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
-                        //    try {
-                        //        mCameraManager.setTorchMode(rearCameraId, !mTorchEnabled);
-                        //        mTorchEnabled = !mTorchEnabled;
-                        //    } catch (CameraAccessException e) {
-                        //        // Ignore
-                        //    }
-                        //    //doHapticFeedback();
-                        //}
+                        String rearCameraId = getRearCameraId();
+                        if (rearCameraId != null) {
+                            mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
+                            try {
+                                mCameraManager.setTorchMode(rearCameraId, !mTorchEnabled);
+                                mTorchEnabled = !mTorchEnabled;
+                            } catch (CameraAccessException e) {
+                                // Ignore
+                            }
+                            //doHapticFeedback();
+                        }
                         break;
                     case "prev":
                         dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PREVIOUS);

@@ -67,7 +67,6 @@ subsystem adf
 # Anyone can read the logs, but if they're not in the "logs"
 # group, then they'll only see log entries for their UID.
 /dev/xLog                 0600   root       root
-/dev/log/*                0666   root       log
 /dev/log/ksystem          0600   root       log
 
 # the msm hw3d client device node is world writable/readable
@@ -139,13 +138,13 @@ subsystem adf
 /dev/usb_accessory        0660   root       usb
 /dev/tun                  0660   system     vpn
 
-/dev/ccci*                0660   radio       radio
-/dev/ttyC*                0660   radio       radio
+/dev/ccci*                0660   radio      radio
+/dev/ttyC*                0660   radio      radio
 /sys/kernel/ccci          modem_info   0644   radio       radio
 /sys/kernel/ccci          md1_postfix  0644   radio       radio
 /sys/kernel/ccci          md2_postfix  0644   radio       radio
-/dev/eemcs*               0660   radio       radio
-/dev/emd*                 0660   radio       radio
+/dev/eemcs*               0660   radio      radio
+/dev/emd*                 0660   radio      radio
 /dev/ccci_pcm_rx          0660   media      media
 /dev/ccci_pcm_tx          0660   media      media
 /dev/ccci_aud             0660   media      media

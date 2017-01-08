@@ -27,8 +27,6 @@ on init
     #mkdir /proinfo 0771 system system
     #mkdir /misc 0771 system system
 
-    mkdir /mnt/cd-rom 0000 system system
-
 # Change ION driver permission
     chmod 0644 /dev/ion
 
@@ -171,7 +169,6 @@ on post-fs-data
     mkdir /data/misc/wifi/hostapd 0771 system wifi
     restorecon /data/misc/wifi/hostapd
 
-    # Add by MTK
     # md32 boot
     chown root system /dev/md32
     chmod 0440 /dev/md32
@@ -477,9 +474,6 @@ on post-fs-data
     #EM eint
     chown root diag /sys/bus/platform/drivers/eint/current_eint
 
-    # for ppp options file
-    mkdir /data/misc/ppp 0770 bluetooth net_bt
-
     # Android SEC related device nodes
     chmod 0660 /dev/sec
     chown root system /dev/sec
@@ -550,10 +544,6 @@ on post-fs-data
     #MATV
     chmod 0660 /dev/MATV
     chown system media /dev/MATV
-
-    # otg_test
-    chown root radio /dev/mt_otg_test
-    chmod 0660 /dev/mt_otg_test
 
     # MDP
     chmod 0660 /dev/mt-mdp
@@ -768,6 +758,7 @@ service start_modem /system/bin/md_ctrl 1
     class main
     disabled
     oneshot
+
 # Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.default 4096,87380,524288,4096,16384,524288
@@ -787,11 +778,6 @@ service start_modem /system/bin/md_ctrl 1
 on property:persist.uartconsole.enable=1
     write /proc/mtprintk 1
 
-# Update the second boot logo
-service bootlogoupdater /system/bin/boot_logo_updater
-    class core
-    oneshot
-
 # bugreport is triggered by holding down volume down, volume up and power
 service bugreport /system/bin/dumpstate -d -p -B \
         -o /data/data/com.android.shell/files/bugreports/bugreport
@@ -799,10 +785,6 @@ service bugreport /system/bin/dumpstate -d -p -B \
     disabled
     oneshot
     keycodes 114 115 116
-
-service netdiag /system/bin/netdiag
-    class main
-    socket netdiag stream 0664 root inet
 
 service nvram_daemon /system/bin/nvram_daemon
     class main
@@ -904,7 +886,7 @@ service autokd /system/bin/autokd
 #
 
 
-service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
+service dhcpcd_bt-pan /system/bin/dhcpcd -BK -dd
     class main
     user root
     group net_admin net_raw
@@ -939,69 +921,6 @@ service iprenew_p2p /system/bin/dhcpcd -n
     disabled
     oneshot
 
-service dhcp_inform /system/bin/dhcpcd -s -BK -A
-    class main
-    user root
-    group system radio dhcp net_admin net_raw
-    disabled
-    oneshot
-
-service dhcpv6_inform /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cSIP.conf" -fi
-    class main
-    user root
-    group system radio dhcp net_admin net_raw
-    disabled
-    oneshot
-
-service dhcp6cDNS_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cDNS.conf" -f wlan0
-    disabled
-    oneshot
-
-service dhcp6c_wlan0 /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6c.conf" -f wlan0
-    disabled
-    oneshot
-
-on property:service.dhcp6c_wlan0.enable=0
-    stop dhcp6c_wlan0
-
-on property:service.dhcp6c_wlan0.enable=1
-    start dhcp6c_wlan0
-
-service dhcp6c_PD /system/bin/dhcp6c -c "/etc/wide-dhcpv6/dhcp6cPD.conf" -f
-    disabled
-    oneshot
-
-on property:service.pppoe_wlan0.enable=0
-    stop pppoe_wlan0
-
-on property:service.pppoe_wlan0.enable=1
-    start pppoe_wlan0
-
-# write proc for test sim
-    on property:gsm.sim.ril.testsim=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.2=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.2=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.3=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.3=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
-    on property:gsm.sim.ril.testsim.4=0
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 0
-    write /proc/sys/net/ipv4/tcp_rto_min 200
-    on property:gsm.sim.ril.testsim.4=1
-    write /proc/sys/net/netfilter/nf_conntrack_tcp_no_window_check 1
-    write /proc/sys/net/ipv4/tcp_rto_min 400
 
 service PPLAgent /system/bin/ppl_agent
     class main
@@ -1012,19 +931,6 @@ service enableswap /system/bin/sh /enableswap.sh
     class late_start
     oneshot
     seclabel u:r:enableswap:s0
-
-#
-#  Modem related services (Begin)
-#
-service pppd_gprs /system/bin/pppd_dt /dev/ttyACM0 debug noauth refuse-eap usepeerdns nodetach
-    user root
-    group radio cache inet misc
-    disabled
-    oneshot
-
-#
-#  Modem related services (End)
-#
 
 service agpsd /system/bin/mtk_agpsd
     class main
@@ -1128,9 +1034,8 @@ service geomagneticd /system/bin/geomagneticd
     group system input
     class main
 
-#
-#emsvr service (start)
-#
+#emsvr service
+
 on property:ro.build.type=eng
     start emsvr
 
@@ -1150,10 +1055,6 @@ service emsvr /system/bin/em_svr
     user root
     group net_bt_stack
 
-#
-#emsvr service (end)
-#
-
 service NvRAMAgent /system/bin/nvram_agent_binder
     class main
     user system
@@ -1165,38 +1066,11 @@ service thermal_manager /system/bin/thermal_manager
     user root
     oneshot
 
-service thermal /system/bin/thermal
-    class main
-    user system
-    group system
-
-service thermald /system/bin/thermald
-    class main
-    user system
-    group system
-
 service fuelgauged /system/bin/fuelgauged
     class main
     user system
     group system
 
-
-#monitor battery status
-service batterywarning /system/bin/batterywarning
-    class main
-    user shell
-    group shell
-
-service MtkCodecService /system/bin/MtkCodecService
-    class main
-    user system
-    group audio media sdcard_r
-
-# GuiExt Server init
-service guiext-server /system/bin/guiext-server
-    class main
-    user system
-    group system graphics
 
 service kpoc_charger /system/bin/kpoc_charger
     class charger

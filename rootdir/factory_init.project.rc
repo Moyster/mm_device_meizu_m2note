@@ -41,15 +41,11 @@ on post-fs
     chmod 0660 /dev/stpbt
     chown bluetooth radio /dev/stpbt
     
-    # Load WiFi Driver
-    #insmod /system/lib/modules/wlan.ko
-
 #
 # Connectivity related modules and character device nodes (Ends)
 #
 
 on boot
-
 
 #
 # Connectivity related services (Begin)

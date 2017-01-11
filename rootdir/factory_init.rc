@@ -44,7 +44,7 @@ loglevel 5
     symlink /dev/block/platform/mtk-msdc.0/by-name/logo /dev/logo 
     #create mountpoint for persist partition
     mkdir /persist 0771 system system
-#Create nvdata mount point
+    #Create nvdata mount point
     mkdir /nvdata 0771 system system
 
 

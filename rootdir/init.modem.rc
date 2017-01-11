@@ -134,8 +134,6 @@ service ccci_rpcd /system/bin/ccci_rpcd 0
     class core
     oneshot
 
-
-#
 #
 #  Modem related services (End)
 #

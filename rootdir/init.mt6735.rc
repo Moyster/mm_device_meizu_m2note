@@ -12,7 +12,7 @@ on early-init
     restorecon /sys/class/meizu/ps/ps_calibration
 
 on init
-# Setup zram options
+    # Setup zram options
     write /sys/block/zram0/comp_algorithm lz4
 
     # Platform-specific mount points
@@ -20,7 +20,7 @@ on init
     mkdir /protect_s 0771 system system
     mkdir /persist 0771 system system
     mkdir /nvdata 0771 system system
-# Create CIP mount point
+    # Create CIP mount point
     mkdir /custom
 
     #mkdir /nvram 0771 system system
@@ -664,7 +664,7 @@ on boot
     chmod 0770 /sys/power/tuxonice
     chmod 0220 /sys/power/tuxonice/do_hibernate
 
-# Smartbook Handler Framework
+    # Smartbook Handler Framework
     chown system system /sys/power/sb_state
     chmod 0660 /sys/power/sb_state
 
@@ -818,10 +818,6 @@ service atcid-daemon-e /system/bin/atcid
 
 on property:persist.service.atci.usermode=1
     setprop persist.sys.usb.config mass_storage,adb,acm
-
-#on property:ro.build.type=eng
-#start atci_service
-#start atcid-daemon-e
 
 service audio-daemon /system/bin/audiocmdservice_atci
     class main
@@ -1074,16 +1070,4 @@ service fuelgauged /system/bin/fuelgauged
 
 service kpoc_charger /system/bin/kpoc_charger
     class charger
-
-###########add for 3Gdongle
-
-on boot
-
-#set the property of persiste.radio.reset_on_switch
-setprop persist.radio.reset_on_switch true
-#end
-
-#set the property of rild.mark_switchuser
-setprop rild.mark_switchuser 0
-#end
 

@@ -35,9 +35,6 @@ PRODUCT_PACKAGES += \
     resize2fs \
     setup_fs
 
-# MTK's Engineer Mode
-PRODUCT_PACKAGES += EngineerMode
-
 # WiFi
 PRODUCT_PACKAGES += \
     dhcpcd.conf \

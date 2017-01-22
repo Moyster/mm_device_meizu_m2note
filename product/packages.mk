@@ -52,6 +52,9 @@ PRODUCT_PACKAGES += \
     gps.mt6753 \
     libcurl
 
+# BT
+PRODUCT_PACKAGES += libbt-vendor
+
 # Audio
 PRODUCT_PACKAGES += \
     audio.a2dp.default \

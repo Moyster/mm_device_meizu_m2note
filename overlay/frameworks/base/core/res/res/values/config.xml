@@ -70,6 +70,7 @@
          USB interfaces.  If the device doesn't want to support tethering over USB this should
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
+        <item>"usb\\d"</item>
         <item>"rndis\\d"</item>
     </string-array>
 
@@ -84,17 +85,20 @@
          bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
          should be empty. -->
     <string-array translatable="false" name="config_tether_bluetooth_regexs">
+        <item>"bnep\\d"</item>
         <item>"bt-pan"</item>
-        <item>"bt-dun"</item>
     </string-array>
-		
-    <!-- Array of allowable ConnectivityManager network types for tethering -->
-    <integer-array name="config_tether_upstream_types">
+
+    <!-- Array of ConnectivityManager.TYPE_xxxx values allowable for tethering -->
+    <!-- Common options are [1, 4] for TYPE_WIFI and TYPE_MOBILE_DUN or
+    <!== [0,1,5,7] for TYPE_MOBILE, TYPE_WIFI, TYPE_MOBILE_HIPRI and TYPE_BLUETOOTH -->
+    <integer-array translatable="false" name="config_tether_upstream_types">
         <item>0</item>
         <item>1</item>
         <item>5</item>
         <item>7</item>
         <item>9</item>
+        <item>49</item>
     </integer-array>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->

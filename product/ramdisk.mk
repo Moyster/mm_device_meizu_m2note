@@ -1,6 +1,6 @@
  # Ramdisk
  PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/rootdir/enableswap.sh:root/enableswap.sh \
+     $(LOCAL_PATH)/rootdir/fstab.swap:root/fstab.swap \
      $(LOCAL_PATH)/rootdir/factory_init.project.rc:root/factory_init.project.rc \
      $(LOCAL_PATH)/rootdir/factory_init.rc:root/factory_init.rc \
      $(LOCAL_PATH)/rootdir/fstab.mt6735:root/fstab.mt6735 \

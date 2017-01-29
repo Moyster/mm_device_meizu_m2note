@@ -1,3 +1,4 @@
+# this list is outdated
 system/bin/6620_launcher
 system/bin/6620_wmt_concurrency
 system/bin/6620_wmt_lpbk

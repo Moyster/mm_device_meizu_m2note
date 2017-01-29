@@ -796,40 +796,6 @@ service nvram_daemon /system/bin/nvram_daemon
     group system
     oneshot
 
-service atci_service /system/bin/atci_service
-    class core
-    socket atci-service stream 660 radio system
-    socket atci-serv-fw stream 660 radio system
-    user root
-    disabled
-    group radio system
-
-service atcid-daemon-u /system/bin/atcid
-    class main
-    socket adb_atci_socket stream 660 radio system
-    user system
-    group radio system media
-    disabled
-    oneshot
-
-service atcid-daemon-e /system/bin/atcid
-    class core
-    socket adb_atci_socket stream 660 radio system
-    user root
-    group radio system
-    disabled
-    oneshot
-
-on property:persist.service.atci.usermode=1
-    setprop persist.sys.usb.config mass_storage,adb,acm
-
-service audio-daemon /system/bin/audiocmdservice_atci
-    class main
-    socket atci-audio stream 660 root system
-    user root
-    disabled
-    oneshot
-
 service pq /system/bin/pq
     class main
     user system
@@ -963,18 +929,6 @@ service ami304d /system/bin/ami304d
     disabled
     class main
 
-service memsicd /system/bin/memsicd
-    disabled
-    user system
-    group system
-    class main
-
-service memsicd3416x /system/bin/memsicd3416x
-    disabled
-    user system
-    group system
-    class main
-
 service akmd09911 /system/bin/akmd09911
     disabled
     user system
@@ -997,12 +951,6 @@ service orientationd /system/bin/orientationd
     disabled
     user system
     group system input
-    class main
-
-service AcdApiDaemon /system/bin/AcdApiDaemon
-    disabled
-    user system
-    group system
     class main
 
 service geomagneticd /system/bin/geomagneticd
@@ -1047,7 +995,6 @@ service fuelgauged /system/bin/fuelgauged
     class main
     user system
     group system
-
 
 service kpoc_charger /system/bin/kpoc_charger
     class charger

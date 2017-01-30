@@ -12,8 +12,10 @@ on early-init
     restorecon /sys/class/meizu/ps/ps_calibration
 
 on init
-    # Setup zram options
-    write /sys/block/zram0/comp_algorithm lz4
+    # Enable KSM
+    write /sys/kernel/mm/ksm/pages_to_scan 100
+    write /sys/kernel/mm/ksm/sleep_millisecs 500
+    write /sys/kernel/mm/ksm/run 1
 
     # Platform-specific mount points
     mkdir /protect_f 0771 system system
